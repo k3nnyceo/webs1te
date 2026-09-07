@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Elegant Wardrobe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #666;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.25rem;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s;
+        }
+
+        .cart-icon:hover {
+            color: #666;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4757;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            transition: all 0.3s;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 3rem 2rem;
+            text-align: center;
+            background: #f9f9f9;
+            border-bottom: 1px solid #eee;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* Shop Container */
+        .shop-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            height: fit-content;
+        }
+
+        .filter-section {
+            margin-bottom: 2rem;
+        }
+
+        .filter-section h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-button {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .filter-button:hover {
+            border-color: #999;
+        }
+
+        .filter-button.active {
+            background: #000;
+            color: white;
+            border-color: #000;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #333;
+        }
+
+        .sort-box {
+            min-width: 180px;
+        }
+
+        .sort-box select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            background: white;
+        }
+
+        .sort-box select:focus {
+            outline: none;
+            border-color: #333;
+        }
+
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            transform: translateY(-4px);
+        }
+
+        .product-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: #f5f5f5;
+            overflow: hidden;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .category-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 0.4rem 0.8rem;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .badge-tops {
+            background: #2196F3;
+        }
+
+        .badge-bottoms {
+            background: #4CAF50;
+        }
+
+        .badge-dresses {
+            background: #E91E63;
+        }
+
+        .badge-accessories {
+            background: #FF9800;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 0.75rem;
+        }
+
+        .product-rating {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: #ffc107;
+        }
+
+        .btn-cart {
+            width: 100%;
+            padding: 0.75rem;
+            background: #000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+
+        .btn-cart:hover {
+            background: #333;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+        }
+
+        .empty-state h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Mobile Controls Toggle */
+        .mobile-filter-toggle {
+            display: none;
+            width: 100%;
+            padding: 0.75rem;
+            background: #000;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                gap: 0;
+                padding: 1rem 0;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 1rem 2rem;
+                border-bottom: 1px solid #eee;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .shop-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .sidebar.active {
+                display: block;
+            }
+
+            .mobile-filter-toggle {
+                display: block;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .search-box {
+                min-width: auto;
+            }
+
+            .sort-box {
+                min-width: auto;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .nav-brand {
+                font-size: 1.25rem;
+            }
+
+            .page-header {
+                padding: 2rem 1rem;
+            }
+
+            .shop-container {
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .product-image-wrapper {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="nav-brand">Elegant Wardrobe</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="cart.html" class="cart-icon">
+                🛒
+                <span class="cart-badge" id="cart-count">0</span>
+            </a>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>Shop Our Collection</h1>
+        <p>Discover our handpicked selection of premium styles</p>
+    </section>
+
+    <!-- Main Shop Container -->
+    <div class="shop-container">
+        <!-- Sidebar Filters -->
+        <aside class="sidebar" id="sidebar">
+            <div class="filter-section">
+                <h3>Category</h3>
+                <button class="filter-button active" onclick="filterByCategory('all')">All</button>
+                <button class="filter-button" onclick="filterByCategory('tops')">Tops</button>
+                <button class="filter-button" onclick="filterByCategory('bottoms')">Bottoms</button>
+                <button class="filter-button" onclick="filterByCategory('dresses')">Dresses</button>
+                <button class="filter-button" onclick="filterByCategory('accessories')">Accessories</button>
+            </div>
+
+            <div class="filter-section">
+                <h3>Price Range</h3>
+                <button class="filter-button active" onclick="filterByPrice('all')">All Prices</button>
+                <button class="filter-button" onclick="filterByPrice('under50')">Under $50</button>
+                <button class="filter-button" onclick="filterByPrice('50to100')">$50 - $100</button>
+                <button class="filter-button" onclick="filterByPrice('over100')">Over $100</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Mobile Filter Toggle -->
+            <button class="mobile-filter-toggle" id="mobile-filter-toggle">Show Filters</button>
+
+            <!-- Controls -->
+            <div class="controls">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Search products..." onkeyup="applyFilters()">
+                </div>
+                <div class="sort-box">
+                    <select id="sort-select" onchange="applyFilters()">
+                        <option value="newest">Sort by: Newest</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="product-grid" id="product-grid"></div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="empty-state" style="display: none;">
+                <h3>No products found</h3>
+                <p>Try adjusting your filters or search terms</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Product Data
+        const products = [
+            { id: 1, name: 'White Linen Shirt', category: 'tops', price: 45, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=500&fit=crop', rating: 4.5 },
+            { id: 2, name: 'Blue Oxford Shirt', category: 'tops', price: 55, image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=500&fit=crop', rating: 4.8 },
+            { id: 3, name: 'Black Crop Top', category: 'tops', price: 35, image: 'https://images.unsplash.com/photo-1525389793944-e163ce65f8ba?w=400&h=500&fit=crop', rating: 4.3 },
+            { id: 4, name: 'Striped Blouse', category: 'tops', price: 48, image: 'https://images.unsplash.com/photo-1551771901-5c606f25b629?w=400&h=500&fit=crop', rating: 4.6 },
+            
+            { id: 5, name: 'Black Denim Jeans', category: 'bottoms', price: 65, image: 'https://images.unsplash.com/photo-1542272604-787c62d465d1?w=400&h=500&fit=crop', rating: 4.7 },
+            { id: 6, name: 'Khaki Chinos', category: 'bottoms', price: 58, image: 'https://images.unsplash.com/photo-1473251167114-81687a9c5e4d?w=400&h=500&fit=crop', rating: 4.4 },
+            { id: 7, name: 'White Linen Pants', category: 'bottoms', price: 62, image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=500&fit=crop', rating: 4.5 },
+            { id: 8, name: 'Leather Leggings', category: 'bottoms', price: 75, image: 'https://images.unsplash.com/photo-1566150905458-1bf049841556?w=400&h=500&fit=crop', rating: 4.2 },
+            
+            { id: 9, name: 'Summer Floral Dress', category: 'dresses', price: 85, image: 'https://images.unsplash.com/photo-1550614000-4895a10e223d?w=400&h=500&fit=crop', rating: 4.9 },
+            { id: 10, name: 'Midi Burgundy Dress', category: 'dresses', price: 92, image: 'https://images.unsplash.com/photo-1495386794409-d80b2e55eca4?w=400&h=500&fit=crop', rating: 4.8 },
+            { id: 11, name: 'Casual Striped Dress', category: 'dresses', price: 55, image: 'https://images.unsplash.com/photo-1537909904737-13fc249d3b0e?w=400&h=500&fit=crop', rating: 4.6 },
+            { id: 12, name: 'Elegant Black Dress', category: 'dresses', price: 110, image: 'https://images.unsplash.com/photo-1565869657569-60673c74d83f?w=400&h=500&fit=crop', rating: 5.0 },
+            
+            { id: 13, name: 'Silk Scarf', category: 'accessories', price: 25, image: 'https://images.unsplash.com/photo-1521572143437-c1a32f148cd6?w=400&h=500&fit=crop', rating: 4.4 },
+            { id: 14, name: 'Canvas Tote Bag', category: 'accessories', price: 40, image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&h=500&fit=crop', rating: 4.5 },
+            { id: 15, name: 'Leather Belt', category: 'accessories', price: 45, image: 'https://images.unsplash.com/photo-1548690596-f0e5dd55d628?w=400&h=500&fit=crop', rating: 4.7 },
+            { id: 16, name: 'Sunglasses', category: 'accessories', price: 60, image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=500&fit=crop', rating: 4.8 }
+        ];
+
+        let selectedCategory = 'all';
+        let selectedPrice = 'all';
+
+        // Render Products
+        function renderProducts(productsToDisplay) {
+            const grid = document.getElementById('product-grid');
+            const emptyState = document.getElementById('empty-state');
+
+            if (productsToDisplay.length === 0) {
+                grid.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            grid.innerHTML = productsToDisplay.map(product => {
+                const badgeClass = `badge-${product.category}`;
+                const stars = '★'.repeat(Math.floor(product.rating)) + (product.rating % 1 ? '½' : '');
+                return `
+                    <div class="product-card">
+                        <div class="product-image-wrapper">
+                            <img src="${product.image}" alt="${product.name}" class="product-image">
+                            <span class="category-badge ${badgeClass}">${product.category}</span>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-price">$${product.price}</div>
+                            <div class="product-rating">
+                                <span class="stars">${stars}</span> ${product.rating}
+                            </div>
+                            <button class="btn-cart" onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Filter by Category
+        function filterByCategory(category) {
+            selectedCategory = category;
+            document.querySelectorAll('.filter-section:first-child .filter-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            applyFilters();
+        }
+
+        // Filter by Price
+        function filterByPrice(range) {
+            selectedPrice = range;
+            document.querySelectorAll('.filter-section:last-child .filter-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            applyFilters();
+        }
+
+        // Apply All Filters
+        function applyFilters() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const sortBy = document.getElementById('sort-select').value;
+
+            let filtered = products.filter(product => {
+                const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
+                const matchesSearch = product.name.toLowerCase().includes(searchTerm);
+                
+                let matchesPrice = true;
+                if (selectedPrice === 'under50') matchesPrice = product.price < 50;
+                if (selectedPrice === '50to100') matchesPrice = product.price >= 50 && product.price <= 100;
+                if (selectedPrice === 'over100') matchesPrice = product.price > 100;
+
+                return matchesCategory && matchesSearch && matchesPrice;
+            });
+
+            // Sort
+            if (sortBy === 'price-low') {
+                filtered.sort((a, b) => a.price - b.price);
+            } else if (sortBy === 'price-high') {
+                filtered.sort((a, b) => b.price - a.price);
+            } else {
+                filtered.reverse();
+            }
+
+            renderProducts(filtered);
+        }
+
+        // Add to Cart
+        function addToCart(productName, price) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            const existingItem = cart.find(item => item.name === productName);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: Date.now(),
+                    name: productName,
+                    price: price,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartBadge();
+            alert(`${productName} added to cart!`);
+        }
+
+        // Update Cart Badge
+        function updateCartBadge() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = count;
+        }
+
+        // Hamburger Menu
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Mobile Filter Toggle
+        const mobileFilterToggle = document.getElementById('mobile-filter-toggle');
+        const sidebar = document.getElementById('sidebar');
+
+        mobileFilterToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            mobileFilterToggle.textContent = sidebar.classList.contains('active') ? 'Hide Filters' : 'Show Filters';
+        });
+
+        // Initialize
+        renderProducts(products);
+        updateCartBadge();
+    </script>
+</body>
+</html>
