@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summer Floral Dress - Elegant Wardrobe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #666;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.25rem;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s;
+        }
+
+        .cart-icon:hover {
+            color: #666;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4757;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            transition: all 0.3s;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .breadcrumb a {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .breadcrumb a:hover {
+            color: #000;
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            margin: 0 0.5rem;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Product Section */
+        .product-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            align-items: flex-start;
+        }
+
+        /* Image Gallery */
+        .image-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .main-image-wrapper {
+            width: 100%;
+            height: 500px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: zoom-in;
+        }
+
+        .main-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .main-image-wrapper:hover .main-image {
+            transform: scale(1.05);
+        }
+
+        .thumbnails {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 100px;
+            background: #f5f5f5;
+            border: 2px solid #eee;
+            border-radius: 4px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .thumbnail:hover {
+            border-color: #999;
+        }
+
+        .thumbnail.active {
+            border-color: #000;
+        }
+
+        /* Product Info */
+        .product-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #000;
+        }
+
+        .product-price {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 0.75rem;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .product-rating:hover {
+            color: #ffc107;
+        }
+
+        .stars {
+            color: #ffc107;
+            font-size: 1rem;
+        }
+
+        .stock-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: #4CAF50;
+            color: white;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            width: fit-content;
+        }
+
+        .stock-badge.out-of-stock {
+            background: #999;
+        }
+
+        .product-description {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Selector Sections */
+        .selector-section {
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1.5rem;
+        }
+
+        .selector-section:last-of-type {
+            border-bottom: none;
+        }
+
+        .selector-label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .size-buttons {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.5rem;
+        }
+
+        .size-btn {
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .size-btn:hover {
+            border-color: #333;
+        }
+
+        .size-btn.active {
+            border-color: #000;
+            background: #000;
+            color: white;
+        }
+
+        .color-swatches {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .color-swatch {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 3px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.1);
+        }
+
+        .color-swatch.active {
+            border-color: #000;
+            box-shadow: 0 0 0 2px white, 0 0 0 4px #000;
+        }
+
+        .color-tooltip {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .color-swatch:hover .color-tooltip {
+            opacity: 1;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .qty-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            font-size: 1.1rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .qty-btn:hover {
+            border-color: #333;
+        }
+
+        .qty-input {
+            width: 60px;
+            height: 40px;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .qty-input:focus {
+            outline: none;
+            border-color: #333;
+        }
+
+        .btn-add-cart {
+            width: 100%;
+            padding: 1rem;
+            background: #000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 1rem;
+        }
+
+        .btn-add-cart:hover {
+            background: #333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Share Buttons */
+        .share-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .share-label {
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .share-btn {
+            display: inline-flex;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .share-btn:hover {
+            background: #000;
+            color: white;
+        }
+
+        /* Tabs */
+        .tabs {
+            margin-bottom: 3rem;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            background: white;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            text-align: left;
+        }
+
+        .tab-btn:hover {
+            background: #f9f9f9;
+        }
+
+        .tab-btn.active {
+            border-bottom-color: #000;
+        }
+
+        .tab-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .tab-content.active {
+            max-height: 500px;
+            padding: 1.5rem 0;
+        }
+
+        .tab-content p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* Related Products */
+        .related-section {
+            margin: 4rem 0;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+
+        .related-card {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .related-card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .related-image {
+            width: 100%;
+            height: 250px;
+            background: #f5f5f5;
+            object-fit: cover;
+        }
+
+        .related-info {
+            padding: 1rem;
+        }
+
+        .related-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .related-price {
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .btn-small {
+            width: 100%;
+            padding: 0.5rem;
+            background: #000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .btn-small:hover {
+            background: #333;
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            margin: 4rem 0;
+        }
+
+        .review-card {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .review-date {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        .review-stars {
+            color: #ffc107;
+            font-size: 0.9rem;
+        }
+
+        .review-text {
+            color: #555;
+            line-height: 1.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .product-section {
+                gap: 2rem;
+            }
+
+            .related-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                gap: 0;
+                padding: 1rem 0;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 1rem 2rem;
+                border-bottom: 1px solid #eee;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .product-section {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .main-image-wrapper {
+                height: 400px;
+            }
+
+            .related-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .size-buttons {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .tab-btn {
+                font-size: 0.85rem;
+                padding: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .nav-brand {
+                font-size: 1.25rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .product-title {
+                font-size: 1.5rem;
+            }
+
+            .product-price {
+                font-size: 1.25rem;
+            }
+
+            .main-image-wrapper {
+                height: 300px;
+            }
+
+            .thumbnails {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .size-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .section-title {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="nav-brand">Elegant Wardrobe</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="cart.html" class="cart-icon">
+                🛒
+                <span class="cart-badge" id="cart-count">0</span>
+            </a>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <a href="shop.html">Shop</a>
+        <span>/</span>
+        <span>Dresses</span>
+        <span>/</span>
+        <span>Summer Floral Dress</span>
+    </div>
+
+    <div class="container">
+        <!-- Product Section -->
+        <section class="product-section">
+            <!-- Image Gallery -->
+            <div class="image-gallery">
+                <div class="main-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1550614000-4895a10e223d?w=600&h=600&fit=crop" alt="Summer Floral Dress" class="main-image" id="main-image">
+                </div>
+                <div class="thumbnails">
+                    <div class="thumbnail active" onclick="swapImage(this)">
+                        <img src="https://images.unsplash.com/photo-1550614000-4895a10e223d?w=150&h=150&fit=crop" alt="View 1">
+                    </div>
+                    <div class="thumbnail" onclick="swapImage(this)">
+                        <img src="https://images.unsplash.com/photo-1595777707802-52eef51a39e9?w=150&h=150&fit=crop" alt="View 2">
+                    </div>
+                    <div class="thumbnail" onclick="swapImage(this)">
+                        <img src="https://images.unsplash.com/photo-1612191329181-14e26e56a96c?w=150&h=150&fit=crop" alt="View 3">
+                    </div>
+                    <div class="thumbnail" onclick="swapImage(this)">
+                        <img src="https://images.unsplash.com/photo-1595777707802-52eef51a39e9?w=150&h=150&fit=crop" alt="View 4">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="product-info">
+                <h1 class="product-title">Summer Floral Dress</h1>
+                <div class="product-price">$85.00</div>
+                
+                <div class="product-rating" onclick="scrollToReviews()">
+                    <span class="stars">★★★★★</span>
+                    <span>4.9 (123 reviews)</span>
+                </div>
+
+                <div class="stock-badge">In Stock</div>
+
+                <p class="product-description">
+                    Experience effortless summer elegance with our floral dress, crafted from lightweight breathable fabric. Perfect for casual outings or special occasions, this versatile piece features vibrant floral patterns and a flattering silhouette that complements any body type. The comfortable fit and quality construction make it a wardrobe essential for warm weather.
+                </p>
+
+                <!-- Size Selector -->
+                <div class="selector-section">
+                    <div class="selector-label">Select Size</div>
+                    <div class="size-buttons">
+                        <button class="size-btn" onclick="selectSize(this)">XS</button>
+                        <button class="size-btn" onclick="selectSize(this)">S</button>
+                        <button class="size-btn active" onclick="selectSize(this)">M</button>
+                        <button class="size-btn" onclick="selectSize(this)">L</button>
+                        <button class="size-btn" onclick="selectSize(this)">XL</button>
+                        <button class="size-btn" onclick="selectSize(this)">XXL</button>
+                    </div>
+                </div>
+
+                <!-- Color Selector -->
+                <div class="selector-section">
+                    <div class="selector-label">Select Color</div>
+                    <div class="color-swatches">
+                        <div class="color-swatch active" style="background: #FFB6C1;" onclick="selectColor(this)">
+                            <span class="color-tooltip">Pink</span>
+                        </div>
+                        <div class="color-swatch" style="background: #87CEEB;" onclick="selectColor(this)">
+                            <span class="color-tooltip">Blue</span>
+                        </div>
+                        <div class="color-swatch" style="background: #98D8C8;" onclick="selectColor(this)">
+                            <span class="color-tooltip">Green</span>
+                        </div>
+                        <div class="color-swatch" style="background: #FFE4B5;" onclick="selectColor(this)">
+                            <span class="color-tooltip">Yellow</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quantity Selector -->
+                <div class="selector-section">
+                    <div class="selector-label">Quantity</div>
+                    <div class="quantity-selector">
+                        <button class="qty-btn" onclick="decreaseQty()">−</button>
+                        <input type="number" class="qty-input" id="qty-input" value="1" min="1" max="10" onchange="validateQty()">
+                        <button class="qty-btn" onclick="increaseQty()">+</button>
+                    </div>
+                </div>
+
+                <!-- Add to Cart -->
+                <button class="btn-add-cart" onclick="addToCart('Summer Floral Dress', 85)">Add to Cart</button>
+
+                <!-- Share -->
+                <div class="share-section">
+                    <span class="share-label">Share:</span>
+                    <a href="#" class="share-btn" title="Share on Facebook">f</a>
+                    <a href="#" class="share-btn" title="Share on Instagram">📷</a>
+                    <a href="#" class="share-btn" title="Share on Pinterest">P</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tabs -->
+        <section class="tabs">
+            <div class="tab-buttons">
+                <button class="tab-btn active" onclick="switchTab(this, 'materials')">Materials & Care</button>
+                <button class="tab-btn" onclick="switchTab(this, 'shipping')">Shipping</button>
+                <button class="tab-btn" onclick="switchTab(this, 'returns')">Returns</button>
+            </div>
+
+            <div class="tab-content active" id="materials">
+                <p><strong>Fabric Composition:</strong> 100% Viscose (breathable, lightweight, drapes beautifully)</p>
+                <p><strong>Washing Instructions:</strong> Hand wash in cold water with mild detergent. Lay flat to dry. Do not bleach or machine wash. Iron on low heat if needed.</p>
+            </div>
+
+            <div class="tab-content" id="shipping">
+                <p><strong>Processing Time:</strong> All orders are processed within 2 business days.</p>
+                <p><strong>Delivery Estimate:</strong> Standard shipping (3-5 business days) is free on orders over $100. Express shipping available for $10.</p>
+            </div>
+
+            <div class="tab-content" id="returns">
+                <p><strong>30-Day Return Policy:</strong> We offer hassle-free returns within 30 days of purchase. Items must be unworn and in original condition with tags attached. Return shipping is free on orders over $50.</p>
+            </div>
+        </section>
+
+        <!-- Related Products -->
+        <section class="related-section">
+            <h2 class="section-title">You Might Also Like</h2>
+            <div class="related-grid">
+                <div class="related-card">
+                    <img src="https://images.unsplash.com/photo-1537909904737-13fc249d3b0e?w=300&h=300&fit=crop" alt="Casual Striped Dress" class="related-image">
+                    <div class="related-info">
+                        <div class="related-name">Casual Striped Dress</div>
+                        <div class="related-price">$55</div>
+                        <button class="btn-small">Quick View</button>
+                    </div>
+                </div>
+
+                <div class="related-card">
+                    <img src="https://images.unsplash.com/photo-1495386794409-d80b2e55eca4?w=300&h=300&fit=crop" alt="Midi Burgundy Dress" class="related-image">
+                    <div class="related-info">
+                        <div class="related-name">Midi Burgundy Dress</div>
+                        <div class="related-price">$92</div>
+                        <button class="btn-small">Quick View</button>
+                    </div>
+                </div>
+
+                <div class="related-card">
+                    <img src="https://images.unsplash.com/photo-1565869657569-60673c74d83f?w=300&h=300&fit=crop" alt="Elegant Black Dress" class="related-image">
+                    <div class="related-info">
+                        <div class="related-name">Elegant Black Dress</div>
+                        <div class="related-price">$110</div>
+                        <button class="btn-small">Quick View</button>
+                    </div>
+                </div>
+
+                <div class="related-card">
+                    <img src="https://images.unsplash.com/photo-1612191329181-14e26e56a96c?w=300&h=300&fit=crop" alt="Summer Linen Dress" class="related-image">
+                    <div class="related-info">
+                        <div class="related-name">Summer Linen Dress</div>
+                        <div class="related-price">$75</div>
+                        <button class="btn-small">Quick View</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews -->
+        <section class="reviews-section" id="reviews">
+            <h2 class="section-title">Customer Reviews</h2>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div>
+                        <div class="reviewer-name">Sarah M.</div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-date">2 weeks ago</div>
+                </div>
+                <p class="review-text">This dress is absolutely stunning! The fabric feels luxurious and breathes beautifully in the summer heat. I received so many compliments when I wore it to a garden party. Highly recommended!</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div>
+                        <div class="reviewer-name">Jessica L.</div>
+                        <div class="review-stars">★★★★☆</div>
+                    </div>
+                    <div class="review-date">1 month ago</div>
+                </div>
+                <p class="review-text">Love the design and colors! The fit is perfect for my body type. My only minor note is that it could be a touch longer, but this is perfect for someone who prefers midi length dresses.</p>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div>
+                        <div class="reviewer-name">Amanda T.</div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <div class="review-date">1 month ago</div>
+                </div>
+                <p class="review-text">Perfect for vacation! Lightweight, comfortable, and versatile enough to dress up or down. The floral pattern is even more beautiful in person than in the photos. Will definitely order again!</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Hamburger Menu
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Image Gallery
+        function swapImage(thumbnail) {
+            document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+            thumbnail.classList.add('active');
+            
+            const imgSrc = thumbnail.querySelector('img').src;
+            const mainImgSrc = imgSrc.replace('w=150&h=150', 'w=600&h=600');
+            document.getElementById('main-image').src = mainImgSrc;
+        }
+
+        // Size Selection
+        function selectSize(button) {
+            document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+        }
+
+        // Color Selection
+        function selectColor(swatch) {
+            document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+            swatch.classList.add('active');
+        }
+
+        // Quantity Controls
+        function decreaseQty() {
+            const input = document.getElementById('qty-input');
+            if (input.value > 1) input.value = parseInt(input.value) - 1;
+        }
+
+        function increaseQty() {
+            const input = document.getElementById('qty-input');
+            if (input.value < 10) input.value = parseInt(input.value) + 1;
+        }
+
+        function validateQty() {
+            const input = document.getElementById('qty-input');
+            if (input.value < 1) input.value = 1;
+            if (input.value > 10) input.value = 10;
+        }
+
+        // Tab Switching
+        function switchTab(button, tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            button.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Scroll to Reviews
+        function scrollToReviews() {
+            document.getElementById('reviews').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Add to Cart
+        function addToCart(productName, price) {
+            const size = document.querySelector('.size-btn.active').textContent;
+            const qty = parseInt(document.getElementById('qty-input').value);
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            const cartItem = {
+                id: Date.now(),
+                name: productName,
+                price: price,
+                size: size,
+                quantity: qty
+            };
+
+            cart.push(cartItem);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartBadge();
+            alert(`${qty} ${productName}(s) in size ${size} added to cart!`);
+        }
+
+        // Update Cart Badge
+        function updateCartBadge() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = count;
+        }
+
+        // Initialize
+        updateCartBadge();
+    </script>
+</body>
+</html>
