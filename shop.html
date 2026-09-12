@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop - Elegant Wardrobe</title>
+    <title>Shop - AmulRee Fashion</title>
     <style>
+        :root {
+            --accent-orange: #FFA500;
+            --accent-orange-dark: #E69500;
+            --accent-black: #000000;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -24,11 +30,14 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 2rem;
-            background: #fff;
+            background:
+                repeating-linear-gradient(45deg, rgba(255,165,0,0.05) 0px, rgba(255,165,0,0.05) 10px, rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.03) 20px),
+                #fff;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
             z-index: 100;
+            border-bottom: 3px solid var(--accent-orange);
         }
 
         .nav-brand {
@@ -79,8 +88,8 @@
             position: absolute;
             top: -8px;
             right: -8px;
-            background: #ff4757;
-            color: white;
+            background: var(--accent-orange);
+            color: #000;
             width: 20px;
             height: 20px;
             border-radius: 50%;
@@ -172,9 +181,10 @@
         }
 
         .filter-button.active {
-            background: #000;
-            color: white;
-            border-color: #000;
+            background: var(--accent-orange);
+            color: #000;
+            border-color: var(--accent-orange);
+            font-weight: 600;
         }
 
         /* Main Content */
@@ -322,17 +332,18 @@
         .btn-cart {
             width: 100%;
             padding: 0.75rem;
-            background: #000;
-            color: white;
+            background: var(--accent-orange);
+            color: #000;
             border: none;
             cursor: pointer;
             font-size: 0.9rem;
+            font-weight: 600;
             transition: all 0.3s;
             border-radius: 4px;
         }
 
         .btn-cart:hover {
-            background: #333;
+            background: var(--accent-orange-dark);
         }
 
         /* Empty State */
@@ -352,11 +363,12 @@
             display: none;
             width: 100%;
             padding: 0.75rem;
-            background: #000;
-            color: white;
+            background: var(--accent-orange);
+            color: #000;
             border: none;
             cursor: pointer;
             font-size: 0.9rem;
+            font-weight: 600;
             margin-bottom: 1rem;
             border-radius: 4px;
         }
@@ -459,7 +471,7 @@
 <body>
     <!-- Navigation -->
     <nav>
-        <a href="index.html" class="nav-brand">Elegant Wardrobe</a>
+        <a href="index.html" class="nav-brand">AmulRee Fashion</a>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="shop.html">Shop</a></li>
@@ -482,7 +494,7 @@
     <!-- Page Header -->
     <section class="page-header">
         <h1>Shop Our Collection</h1>
-        <p>Discover our handpicked selection of premium styles</p>
+        <p>Discover our handpicked selection of premium African styles</p>
     </section>
 
     <!-- Main Shop Container -->
@@ -501,9 +513,9 @@
             <div class="filter-section">
                 <h3>Price Range</h3>
                 <button class="filter-button active" onclick="filterByPrice('all')">All Prices</button>
-                <button class="filter-button" onclick="filterByPrice('under50')">Under $50</button>
-                <button class="filter-button" onclick="filterByPrice('50to100')">$50 - $100</button>
-                <button class="filter-button" onclick="filterByPrice('over100')">Over $100</button>
+                <button class="filter-button" onclick="filterByPrice('under50')">Under ₦75,000</button>
+                <button class="filter-button" onclick="filterByPrice('50to100')">₦75,000 - ₦150,000</button>
+                <button class="filter-button" onclick="filterByPrice('over100')">Over ₦150,000</button>
             </div>
         </aside>
 
@@ -540,25 +552,25 @@
     <script>
         // Product Data
         const products = [
-            { id: 1, name: 'White Linen Shirt', category: 'tops', price: 45, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=500&fit=crop', rating: 4.5 },
-            { id: 2, name: 'Blue Oxford Shirt', category: 'tops', price: 55, image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=500&fit=crop', rating: 4.8 },
-            { id: 3, name: 'Black Crop Top', category: 'tops', price: 35, image: 'https://images.unsplash.com/photo-1525389793944-e163ce65f8ba?w=400&h=500&fit=crop', rating: 4.3 },
-            { id: 4, name: 'Striped Blouse', category: 'tops', price: 48, image: 'https://images.unsplash.com/photo-1551771901-5c606f25b629?w=400&h=500&fit=crop', rating: 4.6 },
+            { id: 1, name: 'White Linen Shirt', category: 'tops', price: 67500, image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=500&fit=crop', rating: 4.5 },
+            { id: 2, name: 'Blue Oxford Shirt', category: 'tops', price: 82500, image: 'https://images.unsplash.com/photo-1595777707802-52eef51a39e9?w=400&h=500&fit=crop', rating: 4.8 },
+            { id: 3, name: 'Black Crop Top', category: 'tops', price: 52500, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=500&fit=crop', rating: 4.3 },
+            { id: 4, name: 'Striped Blouse', category: 'tops', price: 72000, image: 'https://images.unsplash.com/photo-1612191329181-14e26e56a96c?w=400&h=500&fit=crop', rating: 4.6 },
             
-            { id: 5, name: 'Black Denim Jeans', category: 'bottoms', price: 65, image: 'https://images.unsplash.com/photo-1542272604-787c62d465d1?w=400&h=500&fit=crop', rating: 4.7 },
-            { id: 6, name: 'Khaki Chinos', category: 'bottoms', price: 58, image: 'https://images.unsplash.com/photo-1473251167114-81687a9c5e4d?w=400&h=500&fit=crop', rating: 4.4 },
-            { id: 7, name: 'White Linen Pants', category: 'bottoms', price: 62, image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=500&fit=crop', rating: 4.5 },
-            { id: 8, name: 'Leather Leggings', category: 'bottoms', price: 75, image: 'https://images.unsplash.com/photo-1566150905458-1bf049841556?w=400&h=500&fit=crop', rating: 4.2 },
+            { id: 5, name: 'Black Denim Jeans', category: 'bottoms', price: 97500, image: 'https://images.unsplash.com/photo-1542272604-787c62d465d1?w=400&h=500&fit=crop', rating: 4.7 },
+            { id: 6, name: 'Khaki Chinos', category: 'bottoms', price: 87000, image: 'https://images.unsplash.com/photo-1537909904737-13fc249d3b0e?w=400&h=500&fit=crop', rating: 4.4 },
+            { id: 7, name: 'White Linen Pants', category: 'bottoms', price: 93000, image: 'https://images.unsplash.com/photo-1495386794409-d80b2e55eca4?w=400&h=500&fit=crop', rating: 4.5 },
+            { id: 8, name: 'Leather Leggings', category: 'bottoms', price: 112500, image: 'https://images.unsplash.com/photo-1565869657569-60673c74d83f?w=400&h=500&fit=crop', rating: 4.2 },
             
-            { id: 9, name: 'Summer Floral Dress', category: 'dresses', price: 85, image: 'https://images.unsplash.com/photo-1550614000-4895a10e223d?w=400&h=500&fit=crop', rating: 4.9 },
-            { id: 10, name: 'Midi Burgundy Dress', category: 'dresses', price: 92, image: 'https://images.unsplash.com/photo-1495386794409-d80b2e55eca4?w=400&h=500&fit=crop', rating: 4.8 },
-            { id: 11, name: 'Casual Striped Dress', category: 'dresses', price: 55, image: 'https://images.unsplash.com/photo-1537909904737-13fc249d3b0e?w=400&h=500&fit=crop', rating: 4.6 },
-            { id: 12, name: 'Elegant Black Dress', category: 'dresses', price: 110, image: 'https://images.unsplash.com/photo-1565869657569-60673c74d83f?w=400&h=500&fit=crop', rating: 5.0 },
+            { id: 9, name: 'Summer Floral Dress', category: 'dresses', price: 127500, image: 'https://images.unsplash.com/photo-1550614000-4895a10e223d?w=400&h=500&fit=crop', rating: 4.9 },
+            { id: 10, name: 'Midi Burgundy Dress', category: 'dresses', price: 138000, image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=500&fit=crop', rating: 4.8 },
+            { id: 11, name: 'Casual Striped Dress', category: 'dresses', price: 82500, image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&h=500&fit=crop', rating: 4.6 },
+            { id: 12, name: 'Elegant Black Dress', category: 'dresses', price: 165000, image: 'https://images.unsplash.com/photo-1548690596-f0e5dd07cfca?w=400&h=500&fit=crop', rating: 5.0 },
             
-            { id: 13, name: 'Silk Scarf', category: 'accessories', price: 25, image: 'https://images.unsplash.com/photo-1521572143437-c1a32f148cd6?w=400&h=500&fit=crop', rating: 4.4 },
-            { id: 14, name: 'Canvas Tote Bag', category: 'accessories', price: 40, image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&h=500&fit=crop', rating: 4.5 },
-            { id: 15, name: 'Leather Belt', category: 'accessories', price: 45, image: 'https://images.unsplash.com/photo-1548690596-f0e5dd55d628?w=400&h=500&fit=crop', rating: 4.7 },
-            { id: 16, name: 'Sunglasses', category: 'accessories', price: 60, image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&h=500&fit=crop', rating: 4.8 }
+            { id: 13, name: 'Silk Scarf', category: 'accessories', price: 37500, image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400&h=500&fit=crop', rating: 4.4 },
+            { id: 14, name: 'Canvas Tote Bag', category: 'accessories', price: 60000, image: 'https://images.unsplash.com/photo-1595777707802-52eef51a39e9?w=400&h=500&fit=crop', rating: 4.5 },
+            { id: 15, name: 'Leather Belt', category: 'accessories', price: 67500, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=500&fit=crop', rating: 4.7 },
+            { id: 16, name: 'Sunglasses', category: 'accessories', price: 90000, image: 'https://images.unsplash.com/photo-1612191329181-14e26e56a96c?w=400&h=500&fit=crop', rating: 4.8 }
         ];
 
         let selectedCategory = 'all';
@@ -581,16 +593,20 @@
                 const stars = '★'.repeat(Math.floor(product.rating)) + (product.rating % 1 ? '½' : '');
                 return `
                     <div class="product-card">
+                        <a href="product.html" style="text-decoration:none; color:inherit;">
                         <div class="product-image-wrapper">
                             <img src="${product.image}" alt="${product.name}" class="product-image">
                             <span class="category-badge ${badgeClass}">${product.category}</span>
                         </div>
                         <div class="product-info">
                             <div class="product-name">${product.name}</div>
-                            <div class="product-price">$${product.price}</div>
+                            <div class="product-price">₦${product.price.toLocaleString()}</div>
                             <div class="product-rating">
                                 <span class="stars">${stars}</span> ${product.rating}
                             </div>
+                        </div>
+                        </a>
+                        <div class="product-info" style="padding-top:0;">
                             <button class="btn-cart" onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
                         </div>
                     </div>
@@ -628,9 +644,9 @@
                 const matchesSearch = product.name.toLowerCase().includes(searchTerm);
                 
                 let matchesPrice = true;
-                if (selectedPrice === 'under50') matchesPrice = product.price < 50;
-                if (selectedPrice === '50to100') matchesPrice = product.price >= 50 && product.price <= 100;
-                if (selectedPrice === 'over100') matchesPrice = product.price > 100;
+                if (selectedPrice === 'under50') matchesPrice = product.price < 75000;
+                if (selectedPrice === '50to100') matchesPrice = product.price >= 75000 && product.price <= 150000;
+                if (selectedPrice === 'over100') matchesPrice = product.price > 150000;
 
                 return matchesCategory && matchesSearch && matchesPrice;
             });

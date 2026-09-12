@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - AmulRee Fashion</title>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <style>
+        :root {
+            --accent-orange: #FFA500;
+            --accent-orange-dark: #E69500;
+            --accent-black: #000000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background:
+                repeating-linear-gradient(45deg, rgba(255,165,0,0.05) 0px, rgba(255,165,0,0.05) 10px, rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.03) 20px),
+                #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid var(--accent-orange);
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #666;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.25rem;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-orange);
+            color: #000;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            transition: all 0.3s;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 3rem 2rem;
+            text-align: center;
+            background: #f9f9f9;
+            border-bottom: 1px solid #eee;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* Checkout Steps Indicator */
+        .checkout-steps {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            padding: 1.5rem 2rem;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0 1.5rem;
+            font-size: 0.85rem;
+            color: #999;
+            position: relative;
+        }
+
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            width: 20px;
+            height: 2px;
+            background: #ddd;
+        }
+
+        .step-number {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #eee;
+            color: #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .step.active .step-number {
+            background: var(--accent-orange);
+            color: #000;
+        }
+
+        .step.active {
+            color: #000;
+            font-weight: 600;
+        }
+
+        .step.done .step-number {
+            background: #000;
+            color: var(--accent-orange);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 2rem;
+        }
+
+        /* Form Sections */
+        .form-section {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-section h3 {
+            font-size: 1.05rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .section-badge {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--accent-orange);
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            font-size: 0.88rem;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.92rem;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--accent-orange);
+            box-shadow: 0 0 0 3px rgba(255,165,0,0.12);
+        }
+
+        .error-message {
+            color: #d32f2f;
+            font-size: 0.82rem;
+            margin-top: 0.35rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .form-input.error {
+            border-color: #d32f2f;
+            background: #ffebee;
+        }
+
+        /* Payment Method */
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .payment-option:hover {
+            border-color: var(--accent-orange);
+        }
+
+        .payment-option.selected {
+            border-color: var(--accent-orange);
+            background: #fff8f0;
+        }
+
+        .payment-option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-orange);
+        }
+
+        .payment-option-label {
+            flex: 1;
+        }
+
+        .payment-option-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .payment-option-sub {
+            font-size: 0.8rem;
+            color: #777;
+            margin-top: 0.15rem;
+        }
+
+        .paystack-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #011B33;
+            background: #00C3F7;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+        }
+
+        /* Order Summary Sidebar */
+        .order-summary {
+            background: #f9f9f9;
+            padding: 1.75rem;
+            border-radius: 8px;
+            height: fit-content;
+            position: sticky;
+            top: 90px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .order-summary h3 {
+            font-size: 1.05rem;
+            margin-bottom: 1.25rem;
+            font-weight: 700;
+        }
+
+        .order-items {
+            max-height: 260px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            padding-right: 0.25rem;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.75rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e5e5e5;
+            font-size: 0.87rem;
+        }
+
+        .order-item-name {
+            font-weight: 600;
+        }
+
+        .order-item-meta {
+            color: #888;
+            font-size: 0.78rem;
+        }
+
+        .order-item-price {
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.65rem 0;
+            border-bottom: 1px solid #ddd;
+            font-size: 0.9rem;
+        }
+
+        .summary-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .summary-total {
+            padding: 1rem 0 0.25rem;
+            margin-top: 0.5rem;
+            border-top: 2px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-label {
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        .total-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .btn-pay {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent-orange);
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-pay:hover {
+            background: var(--accent-orange-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-pay:disabled {
+            background: #ccc;
+            color: #888;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .secure-note {
+            text-align: center;
+            font-size: 0.78rem;
+            color: #888;
+            margin-top: 0.75rem;
+        }
+
+        .empty-cart-notice {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-cart-notice h2 {
+            margin-bottom: 1rem;
+        }
+
+        .btn-shop {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.875rem 2rem;
+            background: var(--accent-orange);
+            color: #000;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* Success Overlay */
+        .success-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .success-overlay.show {
+            display: flex;
+        }
+
+        .success-card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 2.5rem 2rem;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+            border-top: 6px solid var(--accent-orange);
+        }
+
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: #4CAF50;
+            color: white;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+        }
+
+        .success-card h2 {
+            margin-bottom: 0.75rem;
+        }
+
+        .success-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.92rem;
+        }
+
+        .order-ref {
+            background: #f9f9f9;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .checkout-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .order-summary {
+                position: static;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                gap: 0;
+                padding: 1rem 0;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 1rem 2rem;
+                border-bottom: 1px solid #eee;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .checkout-steps {
+                gap: 0;
+                padding: 1rem;
+                flex-wrap: wrap;
+            }
+
+            .step {
+                padding: 0 0.75rem;
+                font-size: 0.75rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .nav-brand {
+                font-size: 1.25rem;
+            }
+
+            .form-section {
+                padding: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="nav-brand">AmulRee Fashion</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="cart.html" class="cart-icon">
+                🛒
+                <span class="cart-badge" id="cart-count">0</span>
+            </a>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <h1>Checkout</h1>
+        <p>Almost there — just a few details to complete your order</p>
+    </section>
+
+    <!-- Steps -->
+    <div class="checkout-steps">
+        <div class="step done"><span class="step-number">✓</span> Cart</div>
+        <div class="step active"><span class="step-number">2</span> Checkout</div>
+        <div class="step"><span class="step-number">3</span> Confirmation</div>
+    </div>
+
+    <div class="container" id="checkout-container">
+        <!-- Empty Cart Notice -->
+        <div class="empty-cart-notice" id="empty-notice" style="display:none;">
+            <h2>Your cart is empty</h2>
+            <p>Add some items before checking out.</p>
+            <a href="shop.html" class="btn-shop">Continue Shopping</a>
+        </div>
+
+        <!-- Checkout Layout -->
+        <div class="checkout-layout" id="checkout-layout">
+            <!-- Left: Forms -->
+            <div>
+                <!-- Contact Info -->
+                <div class="form-section">
+                    <h3><span class="section-badge">1</span> Contact Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Full Name *</label>
+                            <input type="text" class="form-input" id="full-name" placeholder="e.g. Amara Okafor">
+                            <div class="error-message" id="error-full-name">Full name is required</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Phone Number *</label>
+                            <input type="tel" class="form-input" id="phone" placeholder="e.g. 0801 234 5678">
+                            <div class="error-message" id="error-phone">Enter a valid Nigerian phone number</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Address *</label>
+                        <input type="email" class="form-input" id="email" placeholder="you@example.com">
+                        <div class="error-message" id="error-email">Enter a valid email address</div>
+                    </div>
+                </div>
+
+                <!-- Shipping Address -->
+                <div class="form-section">
+                    <h3><span class="section-badge">2</span> Shipping Address</h3>
+                    <div class="form-group">
+                        <label class="form-label">Street Address *</label>
+                        <input type="text" class="form-input" id="address" placeholder="e.g. 12 Adeola Odeku Street">
+                        <div class="error-message" id="error-address">Street address is required</div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">City *</label>
+                            <input type="text" class="form-input" id="city" placeholder="e.g. Lagos">
+                            <div class="error-message" id="error-city">City is required</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">State *</label>
+                            <select class="form-select" id="state">
+                                <option value="">Select state</option>
+                                <option>Abia</option><option>Abuja (FCT)</option><option>Adamawa</option>
+                                <option>Akwa Ibom</option><option>Anambra</option><option>Bauchi</option>
+                                <option>Bayelsa</option><option>Benue</option><option>Borno</option>
+                                <option>Cross River</option><option>Delta</option><option>Ebonyi</option>
+                                <option>Edo</option><option>Ekiti</option><option>Enugu</option>
+                                <option>Gombe</option><option>Imo</option><option>Jigawa</option>
+                                <option>Kaduna</option><option>Kano</option><option>Katsina</option>
+                                <option>Kebbi</option><option>Kogi</option><option>Kwara</option>
+                                <option selected>Lagos</option><option>Nasarawa</option><option>Niger</option>
+                                <option>Ogun</option><option>Ondo</option><option>Osun</option>
+                                <option>Oyo</option><option>Plateau</option><option>Rivers</option>
+                                <option>Sokoto</option><option>Taraba</option><option>Yobe</option>
+                                <option>Zamfara</option>
+                            </select>
+                            <div class="error-message" id="error-state">Please select a state</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="form-section">
+                    <h3><span class="section-badge">3</span> Payment Method</h3>
+                    <div class="payment-options">
+                        <label class="payment-option selected" id="option-paystack">
+                            <input type="radio" name="payment" value="paystack" checked>
+                            <div class="payment-option-label">
+                                <div class="payment-option-title">Pay with Card, Bank Transfer or USSD</div>
+                                <div class="payment-option-sub">Secured by Paystack — Visa, Mastercard, Verve accepted</div>
+                            </div>
+                            <span class="paystack-badge">Paystack</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Order Summary -->
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+                <div class="order-items" id="order-items"></div>
+
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="summary-subtotal">₦0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span id="summary-shipping">₦0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Tax (10%)</span>
+                    <span id="summary-tax">₦0</span>
+                </div>
+                <div class="summary-total">
+                    <span class="total-label">Total</span>
+                    <span class="total-value" id="summary-total">₦0</span>
+                </div>
+
+                <button class="btn-pay" id="pay-btn" onclick="handlePayment()">
+                    🔒 Pay with Paystack
+                </button>
+                <p class="secure-note">Your payment is encrypted and processed securely by Paystack.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Overlay -->
+    <div class="success-overlay" id="success-overlay">
+        <div class="success-card">
+            <div class="success-icon">✓</div>
+            <h2>Order Confirmed!</h2>
+            <p>Thank you for shopping with AmulRee Fashion. A confirmation email with your receipt is on its way.</p>
+            <div class="order-ref" id="order-ref">Ref: AMR-000000</div>
+            <a href="index.html" class="btn-shop">Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        // Hamburger Menu
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // ⚠️ REPLACE WITH YOUR OWN PAYSTACK PUBLIC KEY (starts with pk_) BEFORE GOING LIVE
+        // Get it from: https://dashboard.paystack.com/#/settings/developer
+        const PAYSTACK_PUBLIC_KEY = 'pk_test_REPLACE_WITH_YOUR_PAYSTACK_PUBLIC_KEY';
+
+        let cart = [];
+        let orderTotals = { subtotal: 0, shipping: 0, tax: 0, total: 0 };
+
+        function loadCheckout() {
+            cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const emptyNotice = document.getElementById('empty-notice');
+            const layout = document.getElementById('checkout-layout');
+
+            if (cart.length === 0) {
+                emptyNotice.style.display = 'block';
+                layout.style.display = 'none';
+                return;
+            }
+
+            emptyNotice.style.display = 'none';
+            layout.style.display = 'grid';
+
+            const itemsContainer = document.getElementById('order-items');
+            itemsContainer.innerHTML = cart.map(item => `
+                <div class="order-item">
+                    <div>
+                        <div class="order-item-name">${item.name}</div>
+                        <div class="order-item-meta">${item.size ? 'Size: ' + item.size + ' · ' : ''}Qty: ${item.quantity}</div>
+                    </div>
+                    <div class="order-item-price">₦${(item.price * item.quantity).toLocaleString()}</div>
+                </div>
+            `).join('');
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = subtotal > 150000 ? 0 : 15000;
+            const tax = Math.round(subtotal * 0.1);
+            const total = subtotal + shipping + tax;
+
+            orderTotals = { subtotal, shipping, tax, total };
+
+            document.getElementById('summary-subtotal').textContent = '₦' + subtotal.toLocaleString();
+            document.getElementById('summary-shipping').textContent = shipping === 0 ? 'FREE' : '₦' + shipping.toLocaleString();
+            document.getElementById('summary-tax').textContent = '₦' + tax.toLocaleString();
+            document.getElementById('summary-total').textContent = '₦' + total.toLocaleString();
+
+            updateCartBadge();
+        }
+
+        function updateCartBadge() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = count;
+        }
+
+        function validateForm() {
+            let isValid = true;
+            const fields = [
+                { id: 'full-name', check: v => v.trim().length > 0 },
+                { id: 'phone', check: v => /^[0-9+\s]{7,15}$/.test(v.trim()) },
+                { id: 'email', check: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) },
+                { id: 'address', check: v => v.trim().length > 0 },
+                { id: 'city', check: v => v.trim().length > 0 },
+                { id: 'state', check: v => v.trim().length > 0 }
+            ];
+
+            fields.forEach(field => {
+                const el = document.getElementById(field.id);
+                const errorEl = document.getElementById('error-' + field.id);
+                const valid = field.check(el.value);
+                if (!valid) {
+                    el.classList.add('error');
+                    if (errorEl) errorEl.classList.add('show');
+                    isValid = false;
+                } else {
+                    el.classList.remove('error');
+                    if (errorEl) errorEl.classList.remove('show');
+                }
+            });
+
+            return isValid;
+        }
+
+        function handlePayment() {
+            if (cart.length === 0) return;
+            if (!validateForm()) return;
+
+            const email = document.getElementById('email').value.trim();
+            const payBtn = document.getElementById('pay-btn');
+
+            // Guard: remind the developer to set a real Paystack key before going live
+            if (PAYSTACK_PUBLIC_KEY.includes('REPLACE_WITH_YOUR')) {
+                alert('Demo mode: Add your real Paystack public key in the script (PAYSTACK_PUBLIC_KEY) to accept live payments.\n\nSimulating a successful payment for now...');
+                completeOrder('DEMO-' + Date.now());
+                return;
+            }
+
+            payBtn.disabled = true;
+            payBtn.textContent = 'Processing...';
+
+            const handler = PaystackPop.setup({
+                key: PAYSTACK_PUBLIC_KEY,
+                email: email,
+                amount: orderTotals.total * 100, // Paystack expects amount in kobo
+                currency: 'NGN',
+                ref: 'AMR-' + Date.now(),
+                metadata: {
+                    custom_fields: [
+                        {
+                            display_name: "Full Name",
+                            variable_name: "full_name",
+                            value: document.getElementById('full-name').value
+                        },
+                        {
+                            display_name: "Phone",
+                            variable_name: "phone",
+                            value: document.getElementById('phone').value
+                        }
+                    ]
+                },
+                callback: function(response) {
+                    completeOrder(response.reference);
+                },
+                onClose: function() {
+                    payBtn.disabled = false;
+                    payBtn.innerHTML = '🔒 Pay with Paystack';
+                }
+            });
+
+            handler.openIframe();
+        }
+
+        function completeOrder(reference) {
+            document.getElementById('order-ref').textContent = 'Ref: ' + reference;
+            document.getElementById('success-overlay').classList.add('show');
+
+            // Clear cart after successful payment
+            localStorage.removeItem('cart');
+        }
+
+        // Initialize
+        loadCheckout();
+    </script>
+</body>
+</html>

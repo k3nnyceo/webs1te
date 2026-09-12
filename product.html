@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Summer Floral Dress - Elegant Wardrobe</title>
+    <title>Summer Floral Dress - AmulRee Fashion</title>
     <style>
+        :root {
+            --accent-orange: #FFA500;
+            --accent-orange-dark: #E69500;
+            --accent-black: #000000;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -24,11 +30,14 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 2rem;
-            background: #fff;
+            background:
+                repeating-linear-gradient(45deg, rgba(255,165,0,0.05) 0px, rgba(255,165,0,0.05) 10px, rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.03) 20px),
+                #fff;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
             z-index: 100;
+            border-bottom: 3px solid var(--accent-orange);
         }
 
         .nav-brand {
@@ -79,8 +88,8 @@
             position: absolute;
             top: -8px;
             right: -8px;
-            background: #ff4757;
-            color: white;
+            background: var(--accent-orange);
+            color: #000;
             width: 20px;
             height: 20px;
             border-radius: 50%;
@@ -305,9 +314,9 @@
         }
 
         .size-btn.active {
-            border-color: #000;
-            background: #000;
-            color: white;
+            border-color: var(--accent-orange);
+            background: var(--accent-orange);
+            color: #000;
         }
 
         .color-swatches {
@@ -330,8 +339,8 @@
         }
 
         .color-swatch.active {
-            border-color: #000;
-            box-shadow: 0 0 0 2px white, 0 0 0 4px #000;
+            border-color: var(--accent-orange);
+            box-shadow: 0 0 0 2px white, 0 0 0 4px var(--accent-orange);
         }
 
         .color-tooltip {
@@ -392,8 +401,8 @@
         .btn-add-cart {
             width: 100%;
             padding: 1rem;
-            background: #000;
-            color: white;
+            background: var(--accent-orange);
+            color: #000;
             border: none;
             border-radius: 4px;
             font-size: 1rem;
@@ -404,9 +413,9 @@
         }
 
         .btn-add-cart:hover {
-            background: #333;
+            background: var(--accent-orange-dark);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
         /* Share Buttons */
@@ -438,8 +447,8 @@
         }
 
         .share-btn:hover {
-            background: #000;
-            color: white;
+            background: var(--accent-orange);
+            color: #000;
         }
 
         /* Tabs */
@@ -472,7 +481,7 @@
         }
 
         .tab-btn.active {
-            border-bottom-color: #000;
+            border-bottom-color: var(--accent-orange);
         }
 
         .tab-content {
@@ -547,17 +556,18 @@
         .btn-small {
             width: 100%;
             padding: 0.5rem;
-            background: #000;
-            color: white;
+            background: var(--accent-orange);
+            color: #000;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 0.85rem;
+            font-weight: 600;
             transition: all 0.3s;
         }
 
         .btn-small:hover {
-            background: #333;
+            background: var(--accent-orange-dark);
         }
 
         /* Reviews Section */
@@ -702,7 +712,7 @@
 <body>
     <!-- Navigation -->
     <nav>
-        <a href="index.html" class="nav-brand">Elegant Wardrobe</a>
+        <a href="index.html" class="nav-brand">AmulRee Fashion</a>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="shop.html">Shop</a></li>
@@ -760,7 +770,7 @@
             <!-- Product Info -->
             <div class="product-info">
                 <h1 class="product-title">Summer Floral Dress</h1>
-                <div class="product-price">$85.00</div>
+                <div class="product-price">₦127,500</div>
                 
                 <div class="product-rating" onclick="scrollToReviews()">
                     <span class="stars">★★★★★</span>
@@ -816,7 +826,7 @@
                 </div>
 
                 <!-- Add to Cart -->
-                <button class="btn-add-cart" onclick="addToCart('Summer Floral Dress', 85)">Add to Cart</button>
+                <button class="btn-add-cart" onclick="addToCart('Summer Floral Dress', 127500)">Add to Cart</button>
 
                 <!-- Share -->
                 <div class="share-section">
@@ -843,11 +853,11 @@
 
             <div class="tab-content" id="shipping">
                 <p><strong>Processing Time:</strong> All orders are processed within 2 business days.</p>
-                <p><strong>Delivery Estimate:</strong> Standard shipping (3-5 business days) is free on orders over $100. Express shipping available for $10.</p>
+                <p><strong>Delivery Estimate:</strong> Standard shipping (3-5 business days) is free on orders over ₦150,000. Express shipping available for ₦15,000.</p>
             </div>
 
             <div class="tab-content" id="returns">
-                <p><strong>30-Day Return Policy:</strong> We offer hassle-free returns within 30 days of purchase. Items must be unworn and in original condition with tags attached. Return shipping is free on orders over $50.</p>
+                <p><strong>30-Day Return Policy:</strong> We offer hassle-free returns within 30 days of purchase. Items must be unworn and in original condition with tags attached. Return shipping is free on orders over ₦75,000.</p>
             </div>
         </section>
 
@@ -859,7 +869,7 @@
                     <img src="https://images.unsplash.com/photo-1537909904737-13fc249d3b0e?w=300&h=300&fit=crop" alt="Casual Striped Dress" class="related-image">
                     <div class="related-info">
                         <div class="related-name">Casual Striped Dress</div>
-                        <div class="related-price">$55</div>
+                        <div class="related-price">₦82,500</div>
                         <button class="btn-small">Quick View</button>
                     </div>
                 </div>
@@ -868,7 +878,7 @@
                     <img src="https://images.unsplash.com/photo-1495386794409-d80b2e55eca4?w=300&h=300&fit=crop" alt="Midi Burgundy Dress" class="related-image">
                     <div class="related-info">
                         <div class="related-name">Midi Burgundy Dress</div>
-                        <div class="related-price">$92</div>
+                        <div class="related-price">₦138,000</div>
                         <button class="btn-small">Quick View</button>
                     </div>
                 </div>
@@ -877,7 +887,7 @@
                     <img src="https://images.unsplash.com/photo-1565869657569-60673c74d83f?w=300&h=300&fit=crop" alt="Elegant Black Dress" class="related-image">
                     <div class="related-info">
                         <div class="related-name">Elegant Black Dress</div>
-                        <div class="related-price">$110</div>
+                        <div class="related-price">₦165,000</div>
                         <button class="btn-small">Quick View</button>
                     </div>
                 </div>
@@ -886,7 +896,7 @@
                     <img src="https://images.unsplash.com/photo-1612191329181-14e26e56a96c?w=300&h=300&fit=crop" alt="Summer Linen Dress" class="related-image">
                     <div class="related-info">
                         <div class="related-name">Summer Linen Dress</div>
-                        <div class="related-price">$75</div>
+                        <div class="related-price">₦112,500</div>
                         <button class="btn-small">Quick View</button>
                     </div>
                 </div>
