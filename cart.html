@@ -587,8 +587,8 @@
 
                 <div class="summary-row">
                     <div class="shipping-label">
-                        <span class="summary-label">Shipping</span>
-                        <span class="shipping-tag regular" id="shipping-tag">₦15,000</span>
+                        <span class="summary-label">Customs</span>
+                        <span class="shipping-tag regular" id="shipping-tag">₦8,000</span>
                     </div>
                     <span class="summary-value" id="shipping">₦0.00</span>
                 </div>
@@ -699,7 +699,7 @@
         // Update summary
         function updateSummary(cart) {
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const shipping = subtotal > 150000 ? 0 : 15000;
+            const shipping = subtotal > 150000 ? 0 : 8000;
             const tax = Math.round(subtotal * 0.1);
             const total = subtotal + shipping + tax;
 
@@ -714,7 +714,7 @@
                 shippingTag.textContent = 'FREE!';
                 shippingTag.className = 'shipping-tag';
             } else {
-                shippingTag.textContent = '₦15,000';
+                shippingTag.textContent = '₦8,000';
                 shippingTag.className = 'shipping-tag regular';
             }
         }

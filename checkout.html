@@ -746,7 +746,7 @@
                     <span id="summary-subtotal">₦0</span>
                 </div>
                 <div class="summary-row">
-                    <span>Shipping</span>
+                    <span>Customs</span>
                     <span id="summary-shipping">₦0</span>
                 </div>
                 <div class="summary-row">
@@ -794,7 +794,7 @@
 
         // ⚠️ REPLACE WITH YOUR OWN PAYSTACK PUBLIC KEY (starts with pk_) BEFORE GOING LIVE
         // Get it from: https://dashboard.paystack.com/#/settings/developer
-        const PAYSTACK_PUBLIC_KEY = 'pk_test_REPLACE_WITH_YOUR_PAYSTACK_PUBLIC_KEY';
+        const PAYSTACK_PUBLIC_KEY = 'pk_test_4e2ded71b4023e071ba515de2f6bc395cb9d5c84';
 
         let cart = [];
         let orderTotals = { subtotal: 0, shipping: 0, tax: 0, total: 0 };
@@ -825,7 +825,7 @@
             `).join('');
 
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const shipping = subtotal > 150000 ? 0 : 15000;
+            const shipping = subtotal > 150000 ? 0 : 8000;
             const tax = Math.round(subtotal * 0.1);
             const total = subtotal + shipping + tax;
 
