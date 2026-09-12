@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - AmulRee Fashion</title>
+    <style>
+        :root {
+            --accent-orange: #FFA500;
+            --accent-orange-dark: #E69500;
+            --accent-black: #000000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background:
+                repeating-linear-gradient(45deg, rgba(255,165,0,0.05) 0px, rgba(255,165,0,0.05) 10px, rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.03) 20px),
+                #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid var(--accent-orange);
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-orange-dark);
+        }
+
+        .nav-links a.current {
+            color: var(--accent-orange-dark);
+            font-weight: 600;
+            border-bottom: 2px solid var(--accent-orange);
+            padding-bottom: 4px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.25rem;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-orange);
+            color: #000;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            transition: all 0.3s;
+        }
+
+        /* Hero / Page Header */
+        .about-hero {
+            background:
+                repeating-linear-gradient(45deg, rgba(255,165,0,0.18) 0px, rgba(255,165,0,0.18) 22px, transparent 22px, transparent 44px),
+                repeating-linear-gradient(-45deg, rgba(0,0,0,0.09) 0px, rgba(0,0,0,0.09) 22px, transparent 22px, transparent 44px),
+                linear-gradient(135deg, #fff8f0 0%, #ffe8cc 100%);
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .about-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .about-hero p {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Story Section */
+        .story-section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3.5rem;
+            align-items: center;
+        }
+
+        .story-image {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+            position: relative;
+        }
+
+        .story-image img {
+            width: 100%;
+            display: block;
+            border-radius: 12px;
+        }
+
+        .story-image::before {
+            content: '';
+            position: absolute;
+            top: -14px;
+            left: -14px;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            background: repeating-linear-gradient(45deg, var(--accent-orange) 0px, var(--accent-orange) 10px, #000 10px, #000 20px);
+            z-index: -1;
+            opacity: 0.85;
+        }
+
+        .story-text h2 {
+            font-size: 1.9rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .story-text p {
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        /* Values Section */
+        .values-section {
+            background: #f9f9f9;
+            padding: 5rem 2rem;
+        }
+
+        .values-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .values-header h2 {
+            font-size: 1.9rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .values-header p {
+            color: #666;
+        }
+
+        .values-grid {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+
+        .value-card {
+            background: white;
+            padding: 2rem 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--accent-orange);
+        }
+
+        .value-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.1);
+        }
+
+        .value-icon {
+            font-size: 2.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .value-card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .value-card p {
+            font-size: 0.88rem;
+            color: #666;
+        }
+
+        /* Stats Strip */
+        .stats-strip {
+            background: #000;
+            color: white;
+            padding: 3rem 2rem;
+            position: relative;
+        }
+
+        .stats-strip::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: repeating-linear-gradient(45deg, var(--accent-orange) 0px, var(--accent-orange) 12px, #333 12px, #333 24px);
+        }
+
+        .stats-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #ccc;
+            margin-top: 0.4rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        .cta-section h2 {
+            font-size: 1.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.875rem 2.25rem;
+            background: var(--accent-orange);
+            color: #000;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+
+        .btn:hover {
+            background: var(--accent-orange-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #ccc;
+            padding: 3rem 2rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: repeating-linear-gradient(45deg, var(--accent-orange) 0px, var(--accent-orange) 12px, #000 12px, #000 24px);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: white;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .footer-section a {
+            display: block;
+            color: #ccc;
+            text-decoration: none;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            width: 36px;
+            height: 36px;
+            background: #333;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: var(--accent-orange);
+            color: #000;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 900px) {
+            .story-section {
+                grid-template-columns: 1fr;
+            }
+
+            .values-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                gap: 0;
+                padding: 1rem 0;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links a {
+                padding: 1rem 2rem;
+                border-bottom: 1px solid #eee;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .about-hero h1 {
+                font-size: 1.9rem;
+            }
+
+            .story-section {
+                padding: 3rem 1.5rem;
+            }
+
+            .story-image::before {
+                display: none;
+            }
+
+            .values-section {
+                padding: 3rem 1.5rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .social-icons {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .nav-brand {
+                font-size: 1.25rem;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="nav-brand">AmulRee Fashion</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="about.html" class="current">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+            <a href="cart.html" class="cart-icon">
+                🛒
+                <span class="cart-badge" id="cart-count">0</span>
+            </a>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="about-hero">
+        <h1>Our Story</h1>
+        <p>Proudly Nigerian. Proudly African. AmulRee Fashion was built to bring vibrant Ankara-inspired style to every wardrobe.</p>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story-section">
+        <div class="story-image">
+            <img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=700&h=800&fit=crop" alt="AmulRee Fashion pieces">
+        </div>
+        <div class="story-text">
+            <h2>Rooted in Lagos, Made for the World</h2>
+            <p>AmulRee Fashion started with a simple idea: Nigerian style deserves a global stage. Founded in Lagos, we set out to create a wardrobe brand that celebrates the boldness of Ankara prints while staying true to modern, everyday wearability.</p>
+            <p>Every piece we release is chosen with care — from the fabric to the fit — because we believe fashion should make you feel confident, comfortable, and connected to where you're from.</p>
+            <p>Today, AmulRee Fashion serves customers across Nigeria, with a growing collection that blends traditional African textiles with contemporary silhouettes for work, weekends, and everything in between.</p>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="values-header">
+            <h2>What We Stand For</h2>
+            <p>The values that guide every piece we design and every order we ship.</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">🧵</div>
+                <h3>Quality Craftsmanship</h3>
+                <p>Every garment is checked for fabric quality, stitching, and finish before it reaches you.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🌍</div>
+                <h3>Authentic Heritage</h3>
+                <p>Our designs draw from real Ankara traditions, reimagined for modern everyday style.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🤝</div>
+                <h3>Customer First</h3>
+                <p>From sizing questions to returns, our team is here to make shopping with us easy.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">♻️</div>
+                <h3>Responsible Fashion</h3>
+                <p>We favor durable pieces and thoughtful production over fast, disposable trends.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Strip -->
+    <section class="stats-strip">
+        <div class="stats-grid">
+            <div>
+                <div class="stat-number">16+</div>
+                <div class="stat-label">Curated Styles</div>
+            </div>
+            <div>
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Nigerian Owned</div>
+            </div>
+            <div>
+                <div class="stat-number">36</div>
+                <div class="stat-label">States We Ship To</div>
+            </div>
+            <div>
+                <div class="stat-number">4.7★</div>
+                <div class="stat-label">Average Rating</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <h2>Ready to Shop the Collection?</h2>
+        <p>Discover pieces that bring Ankara-inspired color and modern style into your everyday wardrobe.</p>
+        <a href="shop.html" class="btn">Shop Now</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Shop</h3>
+                <a href="shop.html">All Products</a>
+                <a href="shop.html">New Arrivals</a>
+                <a href="shop.html">Sale</a>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <a href="contact.html">Contact Us</a>
+                <a href="contact.html">Shipping Info</a>
+                <a href="contact.html">Returns</a>
+                <a href="contact.html">FAQ</a>
+            </div>
+            <div class="footer-section">
+                <h3>Connect</h3>
+                <div class="social-icons">
+                    <a href="#" title="Facebook">f</a>
+                    <a href="#" title="Instagram">📷</a>
+                    <a href="#" title="Pinterest">P</a>
+                </div>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 AmulRee Fashion. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger Menu
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Update cart badge
+        function updateCartBadge() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').textContent = count;
+        }
+
+        updateCartBadge();
+    </script>
+</body>
+</html>
